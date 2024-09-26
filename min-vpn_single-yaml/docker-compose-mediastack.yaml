@@ -81,20 +81,20 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  authelia:
-    image: ghcr.io/authelia/authelia:latest
-    container_name: authelia
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/authelia:/config
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-    restart: unless-stopped
-# NOTE: Authelia MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   authelia:
+#     image: ghcr.io/authelia/authelia:latest
+#     container_name: authelia
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/authelia:/config
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#     restart: unless-stopped
+# # NOTE: Authelia MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -134,43 +134,43 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  ddns-updater:
-    image: qmcgaw/ddns-updater:latest
-    container_name: ddns-updater
-    restart: always
-    user: ${PUID:?err}:${PGID:?err}
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/ddns-updater:/updater/data
-    ports:
-      - ${WEBUI_PORT_DDNS_UPDATER:?err}:${WEBUI_PORT_DDNS_UPDATER:?err}/tcp
-    environment:
-#      - PUID=${PUID:?err}    # Not used in DDNS-Updater - see above:   user: ${PUID:?err}:${PGID:?err}
-#      - PGID=${PGID:?err}    # Not used in DDNS-Updater - see above:   user: ${PUID:?err}:${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - CONFIG=
-      - PERIOD=5m
-      - UPDATE_COOLDOWN_PERIOD=5m
-      - PUBLICIP_FETCHERS=all
-      - PUBLICIP_HTTP_PROVIDERS=all
-      - PUBLICIPV4_HTTP_PROVIDERS=all
-      - PUBLICIPV6_HTTP_PROVIDERS=all
-      - PUBLICIP_DNS_PROVIDERS=all
-      - PUBLICIP_DNS_TIMEOUT=3s
-      - HTTP_TIMEOUT=10s
-      # Web UI
-      - LISTENING_ADDRESS=:${WEBUI_PORT_DDNS_UPDATER:?err}
-      - ROOT_URL=/
-      # Backup
-      - BACKUP_PERIOD=0 # 0 to disable
-      - BACKUP_DIRECTORY=/updater/data
-      # Other
-      - LOG_LEVEL=info
-      - LOG_CALLER=hidden
-      - SHOUTRRR_ADDRESSES=
-# NOTE: DDNS-Update MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   ddns-updater:
+#     image: qmcgaw/ddns-updater:latest
+#     container_name: ddns-updater
+#     restart: always
+#     user: ${PUID:?err}:${PGID:?err}
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/ddns-updater:/updater/data
+#     ports:
+#       - ${WEBUI_PORT_DDNS_UPDATER:?err}:${WEBUI_PORT_DDNS_UPDATER:?err}/tcp
+#     environment:
+# #      - PUID=${PUID:?err}    # Not used in DDNS-Updater - see above:   user: ${PUID:?err}:${PGID:?err}
+# #      - PGID=${PGID:?err}    # Not used in DDNS-Updater - see above:   user: ${PUID:?err}:${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#       - CONFIG=
+#       - PERIOD=5m
+#       - UPDATE_COOLDOWN_PERIOD=5m
+#       - PUBLICIP_FETCHERS=all
+#       - PUBLICIP_HTTP_PROVIDERS=all
+#       - PUBLICIPV4_HTTP_PROVIDERS=all
+#       - PUBLICIPV6_HTTP_PROVIDERS=all
+#       - PUBLICIP_DNS_PROVIDERS=all
+#       - PUBLICIP_DNS_TIMEOUT=3s
+#       - HTTP_TIMEOUT=10s
+#       # Web UI
+#       - LISTENING_ADDRESS=:${WEBUI_PORT_DDNS_UPDATER:?err}
+#       - ROOT_URL=/
+#       # Backup
+#       - BACKUP_PERIOD=0 # 0 to disable
+#       - BACKUP_DIRECTORY=/updater/data
+#       # Other
+#       - LOG_LEVEL=info
+#       - LOG_CALLER=hidden
+#       - SHOUTRRR_ADDRESSES=
+# # NOTE: DDNS-Update MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -184,24 +184,24 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  filebot:
-    image: rednoah/filebot:xpra
-    container_name: filebot
-    restart: unless-stopped
-    ports:
-      - "${WEBUI_PORT_FILEBOT:?err}:5454"
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/filebot:/data/filebot
-      - ${FOLDER_FOR_MEDIA:?err}/filebot:/filebot
-    environment:
-#      - XPRA_AUTH=password:value=YOUR_PASSWORD
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - DARK_MODE=1
-    networks:
-      - mediastack
+#   filebot:
+#     image: rednoah/filebot:xpra
+#     container_name: filebot
+#     restart: unless-stopped
+#     ports:
+#       - "${WEBUI_PORT_FILEBOT:?err}:5454"
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/filebot:/data/filebot
+#       - ${FOLDER_FOR_MEDIA:?err}/filebot:/filebot
+#     environment:
+# #      - XPRA_AUTH=password:value=YOUR_PASSWORD
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#       - DARK_MODE=1
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -238,22 +238,22 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  heimdall:
-    image: lscr.io/linuxserver/heimdall:latest
-    container_name: heimdall
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/heimdall:/config
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-    ports:
-      - "${WEBUI_PORT_HEIMDALL:?err}:80"
-# NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   heimdall:
+#     image: lscr.io/linuxserver/heimdall:latest
+#     container_name: heimdall
+#     restart: unless-stopped
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/heimdall:/config
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#     ports:
+#       - "${WEBUI_PORT_HEIMDALL:?err}:80"
+# # NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -265,25 +265,25 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  homarr:
-    image: ghcr.io/ajnart/homarr:latest
-    container_name: homarr
-    restart: unless-stopped
-    ports:
-      - "${WEBUI_PORT_HOMARR:?err}:7575"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${FOLDER_FOR_DATA:?err}/homarr/configs:/app/data/configs
-      - ${FOLDER_FOR_DATA:?err}/homarr/icons:/app/public/icons
-      - ${FOLDER_FOR_DATA:?err}/homarr/data:/data
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-# NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   homarr:
+#     image: ghcr.io/ajnart/homarr:latest
+#     container_name: homarr
+#     restart: unless-stopped
+#     ports:
+#       - "${WEBUI_PORT_HOMARR:?err}:7575"
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ${FOLDER_FOR_DATA:?err}/homarr/configs:/app/data/configs
+#       - ${FOLDER_FOR_DATA:?err}/homarr/icons:/app/public/icons
+#       - ${FOLDER_FOR_DATA:?err}/homarr/data:/data
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+# # NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
     
 ###########################################################################
 ###########################################################################
@@ -295,23 +295,23 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  homepage:
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
-    restart: unless-stopped
-    ports:
-      - ${WEBUI_PORT_HOMEPAGE:?err}:3000
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/homepage:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-# NOTE: Homepage MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   homepage:
+#     image: ghcr.io/gethomepage/homepage:latest
+#     container_name: homepage
+#     restart: unless-stopped
+#     ports:
+#       - ${WEBUI_PORT_HOMEPAGE:?err}:3000
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/homepage:/app/config
+#       - /var/run/docker.sock:/var/run/docker.sock
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+# # NOTE: Homepage MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -412,23 +412,23 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  mylar:
-    image: lscr.io/linuxserver/mylar3:latest
-    container_name: mylar
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/mylar:/config
-      - ${FOLDER_FOR_MEDIA:?err}:/data
-    ports:
-      - "${WEBUI_PORT_MYLAR:?err}:8090"
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - TZ=${TIMEZONE:?err}
-      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:mylar3
-      - TP_THEME=${TP_THEME:?err}
-    networks:
-      - mediastack
+  # mylar:
+  #   image: lscr.io/linuxserver/mylar3:latest
+  #   container_name: mylar
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/mylar:/config
+  #     - ${FOLDER_FOR_MEDIA:?err}:/data
+  #   ports:
+  #     - "${WEBUI_PORT_MYLAR:?err}:8090"
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:mylar3
+  #     - TP_THEME=${TP_THEME:?err}
+  #   networks:
+  #     - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -440,36 +440,36 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    restart: unless-stopped
-# Add Configurations for GPU Hardware Rendering Here:
-#    devices:
-#      - /dev/dri/renderD128:/dev/dri/renderD128
-#      - /dev/dri/card0:/dev/dri/card0
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/plex:/config
-      - ${FOLDER_FOR_MEDIA:?err}/media:/data/media
-    ports:
-      - "${WEBUI_PORT_PLEX:?err}:32400"
-#      - 1900:1900/udp
-#      - 5353:5353/udp
-      - 8324:8324
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-      - 32469:32469
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - VERSION=docker
-      - PLEX_CLAIM=${PLEX_CLAIM}
-    networks:
-      - mediastack
+#   plex:
+#     image: lscr.io/linuxserver/plex:latest
+#     container_name: plex
+#     restart: unless-stopped
+# # Add Configurations for GPU Hardware Rendering Here:
+# #    devices:
+# #      - /dev/dri/renderD128:/dev/dri/renderD128
+# #      - /dev/dri/card0:/dev/dri/card0
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/plex:/config
+#       - ${FOLDER_FOR_MEDIA:?err}/media:/data/media
+#     ports:
+#       - "${WEBUI_PORT_PLEX:?err}:32400"
+# #      - 1900:1900/udp
+# #      - 5353:5353/udp
+#       - 8324:8324
+#       - 32410:32410/udp
+#       - 32412:32412/udp
+#       - 32413:32413/udp
+#       - 32414:32414/udp
+#       - 32469:32469
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#       - VERSION=docker
+#       - PLEX_CLAIM=${PLEX_CLAIM}
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -565,23 +565,23 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  readarr:
-    image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/readarr:/config
-      - ${FOLDER_FOR_MEDIA:?err}:/data
-    ports:
-      - "${WEBUI_PORT_READARR:?err}:8787"
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - TZ=${TIMEZONE:?err}
-      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:readarr
-      - TP_THEME=${TP_THEME:?err}
-    networks:
-      - mediastack
+  # readarr:
+  #   image: lscr.io/linuxserver/readarr:develop
+  #   container_name: readarr
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/readarr:/config
+  #     - ${FOLDER_FOR_MEDIA:?err}:/data
+  #   ports:
+  #     - "${WEBUI_PORT_READARR:?err}:8787"
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:readarr
+  #     - TP_THEME=${TP_THEME:?err}
+  #   networks:
+  #     - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -593,23 +593,23 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/sabnzbd:/config
-      - ${FOLDER_FOR_MEDIA:?err}:/data
-    ports:
-      - "${WEBUI_PORT_SABNZBD:?err}:8080"
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - TZ=${TIMEZONE:?err}
-      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sabnzbd
-      - TP_THEME=${TP_THEME:?err}
-    networks:
-      - mediastack
+  # sabnzbd:
+  #   image: lscr.io/linuxserver/sabnzbd:latest
+  #   container_name: sabnzbd
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/sabnzbd:/config
+  #     - ${FOLDER_FOR_MEDIA:?err}:/data
+  #   ports:
+  #     - "${WEBUI_PORT_SABNZBD:?err}:8080"
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sabnzbd
+  #     - TP_THEME=${TP_THEME:?err}
+  #   networks:
+  #     - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -650,36 +650,36 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  swag:
-    image: lscr.io/linuxserver/swag:latest
-    container_name: swag
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/swag:/config
-    ports:
-      - ${REVERSE_PROXY_PORT_HTTP:?err}:80
-      - ${REVERSE_PROXY_PORT_HTTPS:?err}:443
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - URL=${DOMAINNAME:?err}
-      - SUBDOMAINS=${SUBDOMAINS}
-      - VALIDATION=${VALIDATION:?err}
-      - CERTPROVIDER=${CERTPROVIDER}
-      - DNSPLUGIN=${DNSPLUGIN}
-      - PROPAGATION=${PROPAGATION}
-      - DUCKDNSTOKEN=${DUCKDNSTOKEN}
-      - EMAIL=${EMAIL}
-      - ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}
-      - EXTRA_DOMAINS=${EXTRA_DOMAINS}
-      - STAGING=${STAGING}
-# NOTE: SWAG MUST NOT connect to the Gluetun VPN container
-    networks:
-      - mediastack
+#   swag:
+#     image: lscr.io/linuxserver/swag:latest
+#     container_name: swag
+#     cap_add:
+#       - NET_ADMIN
+#     restart: unless-stopped
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/swag:/config
+#     ports:
+#       - ${REVERSE_PROXY_PORT_HTTP:?err}:80
+#       - ${REVERSE_PROXY_PORT_HTTPS:?err}:443
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+#       - URL=${DOMAINNAME:?err}
+#       - SUBDOMAINS=${SUBDOMAINS}
+#       - VALIDATION=${VALIDATION:?err}
+#       - CERTPROVIDER=${CERTPROVIDER}
+#       - DNSPLUGIN=${DNSPLUGIN}
+#       - PROPAGATION=${PROPAGATION}
+#       - DUCKDNSTOKEN=${DUCKDNSTOKEN}
+#       - EMAIL=${EMAIL}
+#       - ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}
+#       - EXTRA_DOMAINS=${EXTRA_DOMAINS}
+#       - STAGING=${STAGING}
+# # NOTE: SWAG MUST NOT connect to the Gluetun VPN container
+#     networks:
+#       - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -693,51 +693,51 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  tdarr:
-    image: ghcr.io/haveagitgat/tdarr:latest
-    container_name: tdarr
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/tdarr/server:/app/server
-      - ${FOLDER_FOR_DATA:?err}/tdarr/configs:/app/configs
-      - ${FOLDER_FOR_DATA:?err}/tdarr/logs:/app/logs
-      - ${FOLDER_FOR_DATA:?err}/tdarr_transcode_cache:/temp
-      - ${FOLDER_FOR_MEDIA:?err}/media:/data
-    ports:
-      - "${TDARR_SERVER_PORT:?err}:${TDARR_SERVER_PORT:?err}"
-      - "${WEBUI_PORT_TDARR:?err}:${WEBUI_PORT_TDARR:?err}"
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - serverIP=0.0.0.0
-      - serverPort=${TDARR_SERVER_PORT:?err}
-      - webUIPort=${WEBUI_PORT_TDARR:?err}
-      - internalNode=true
-      - nodeID=Tdarr_Server
-    networks:
-      - mediastack
+  # tdarr:
+  #   image: ghcr.io/haveagitgat/tdarr:latest
+  #   container_name: tdarr
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr/server:/app/server
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr/configs:/app/configs
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr/logs:/app/logs
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr_transcode_cache:/temp
+  #     - ${FOLDER_FOR_MEDIA:?err}/media:/data
+  #   ports:
+  #     - "${TDARR_SERVER_PORT:?err}:${TDARR_SERVER_PORT:?err}"
+  #     - "${WEBUI_PORT_TDARR:?err}:${WEBUI_PORT_TDARR:?err}"
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - UMASK=${UMASK:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #     - serverIP=0.0.0.0
+  #     - serverPort=${TDARR_SERVER_PORT:?err}
+  #     - webUIPort=${WEBUI_PORT_TDARR:?err}
+  #     - internalNode=true
+  #     - nodeID=Tdarr_Server
+  #   networks:
+  #     - mediastack
 
-  tdarr-node:
-    image: ghcr.io/haveagitgat/tdarr_node:latest
-    container_name: tdarr-node
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/tdarr/configs:/app/configs
-      - ${FOLDER_FOR_DATA:?err}/tdarr/logs:/app/logs
-      - ${FOLDER_FOR_DATA:?err}/tdarr_transcode_cache:/temp
-      - ${FOLDER_FOR_MEDIA:?err}/media:/data
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-      - nodeID=Tdarr_Node_1
-      - serverIP=0.0.0.0
-      - serverPort=${TDARR_SERVER_PORT:?err}
-    networks:
-      - mediastack
+  # tdarr-node:
+  #   image: ghcr.io/haveagitgat/tdarr_node:latest
+  #   container_name: tdarr-node
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr/configs:/app/configs
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr/logs:/app/logs
+  #     - ${FOLDER_FOR_DATA:?err}/tdarr_transcode_cache:/temp
+  #     - ${FOLDER_FOR_MEDIA:?err}/media:/data
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - UMASK=${UMASK:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #     - nodeID=Tdarr_Node_1
+  #     - serverIP=0.0.0.0
+  #     - serverPort=${TDARR_SERVER_PORT:?err}
+  #   networks:
+  #     - mediastack
 
 ###########################################################################
 ###########################################################################
@@ -750,94 +750,94 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  unpackerr:
-    image: ghcr.io/hotio/unpackerr:latest
-    container_name: unpackerr
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/unpackerr:/config
-      - ${FOLDER_FOR_MEDIA:?err}:/data
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-# Documentation on all Environment Variables can be found at:
-# https://github.com/davidnewhall/unpackerr#docker-env-variables
-      - UN_DEBUG=false
-      - UN_LOG_FILE=
-      - UN_LOG_FILES=10
-      - UN_LOG_FILE_MB=10
-      - UN_INTERVAL=2m
-      - UN_START_DELAY=1m
-      - UN_RETRY_DELAY=5m
-      - UN_MAX_RETRIES=3
-      - UN_PARALLEL=1
-      - UN_FILE_MODE=0664
-      - UN_DIR_MODE=0775
-      # Sonarr Config - Copy API Key from: http://sonarr:8989/general/settings
-      - UN_SONARR_0_URL=http://sonarr:8989
-      - UN_SONARR_0_API_KEY=
-      - UN_SONARR_0_PATHS_0=/data/torrents/anime
-      - UN_SONARR_0_PATHS_1=/data/torrents/tv
-      - UN_SONARR_0_PROTOCOLS=torrent
-      - UN_SONARR_0_TIMEOUT=10s
-      - UN_SONARR_0_DELETE_ORIG=false
-      - UN_SONARR_0_DELETE_DELAY=5m
-      # Radarr Config - Copy API Key from: http://radarr:7878/general/settings
-      - UN_RADARR_0_URL=http://radarr:7878
-      - UN_RADARR_0_API_KEY=
-      - UN_RADARR_0_PATHS_0=/data/torrents/movies
-      - UN_RADARR_0_PROTOCOLS=torrent
-      - UN_RADARR_0_TIMEOUT=10s
-      - UN_RADARR_0_DELETE_ORIG=false
-      - UN_RADARR_0_DELETE_DELAY=5m
-      # Lidarr Config - Copy API Key from: http://lidarr:8686/general/settings
-      - UN_LIDARR_0_URL=http://lidarr:8686
-      - UN_LIDARR_0_API_KEY=
-      - UN_LIDARR_0_PATHS_0=/data/torrents/music
-      - UN_LIDARR_0_PROTOCOLS=torrent
-      - UN_LIDARR_0_TIMEOUT=10s
-      - UN_LIDARR_0_DELETE_ORIG=false
-      - UN_LIDARR_0_DELETE_DELAY=5m
-      # Readarr Config - Copy API Key from: http://readarr:8787/general/settings
-      - UN_READARR_0_URL=http://readarr:8787
-      - UN_READARR_0_API_KEY=
-      - UN_READARR_0_PATHS_0=/data/torrents/books
-      - UN_READARR_0_PROTOCOLS=torrent
-      - UN_READARR_0_TIMEOUT=10s
-      - UN_READARR_0_DELETE_ORIG=false
-      - UN_READARR_0_DELETE_DELAY=5m
-      # Folder Config
-      - UN_FOLDER_0_PATH=
-      - UN_FOLDER_0_EXTRACT_PATH=
-      - UN_FOLDER_0_DELETE_AFTER=10m
-      - UN_FOLDER_0_DELETE_ORIGINAL=false
-      - UN_FOLDER_0_DELETE_FILES=false
-      - UN_FOLDER_0_MOVE_BACK=false
-      # Webhook Config
-      - UN_WEBHOOK_0_URL=
-      - UN_WEBHOOK_0_NAME=
-      - UN_WEBHOOK_0_NICKNAME=Unpackerr
-      - UN_WEBHOOK_0_CHANNEL=
-      - UN_WEBHOOK_0_TIMEOUT=10s
-      - UN_WEBHOOK_0_SILENT=false
-      - UN_WEBHOOK_0_IGNORE_SSL=false
-      - UN_WEBHOOK_0_EXCLUDE_0=
-      - UN_WEBHOOK_0_EVENTS_0=0
-      - UN_WEBHOOK_0_TEMPLATE_PATH=
-      - UN_WEBHOOK_0_CONTENT_TYPE=application/json
-      # Command Hook Config
-      - UN_CMDHOOK_0_COMMAND=
-      - UN_CMDHOOK_0_NAME=
-      - UN_CMDHOOK_0_TIMEOUT=10s
-      - UN_CMDHOOK_0_SILENT=false
-      - UN_CMDHOOK_0_SHELL=false
-      - UN_CMDHOOK_0_EXCLUDE_0=
-      - UN_CMDHOOK_0_EVENTS_0=0
-    security_opt:
-      - no-new-privileges:true
-    network_mode: none
+#   unpackerr:
+#     image: ghcr.io/hotio/unpackerr:latest
+#     container_name: unpackerr
+#     restart: unless-stopped
+#     volumes:
+#       - ${FOLDER_FOR_DATA:?err}/unpackerr:/config
+#       - ${FOLDER_FOR_MEDIA:?err}:/data
+#     environment:
+#       - PUID=${PUID:?err}
+#       - PGID=${PGID:?err}
+#       - UMASK=${UMASK:?err}
+#       - TZ=${TIMEZONE:?err}
+# # Documentation on all Environment Variables can be found at:
+# # https://github.com/davidnewhall/unpackerr#docker-env-variables
+#       - UN_DEBUG=false
+#       - UN_LOG_FILE=
+#       - UN_LOG_FILES=10
+#       - UN_LOG_FILE_MB=10
+#       - UN_INTERVAL=2m
+#       - UN_START_DELAY=1m
+#       - UN_RETRY_DELAY=5m
+#       - UN_MAX_RETRIES=3
+#       - UN_PARALLEL=1
+#       - UN_FILE_MODE=0664
+#       - UN_DIR_MODE=0775
+#       # Sonarr Config - Copy API Key from: http://sonarr:8989/general/settings
+#       - UN_SONARR_0_URL=http://sonarr:8989
+#       - UN_SONARR_0_API_KEY=
+#       - UN_SONARR_0_PATHS_0=/data/torrents/anime
+#       - UN_SONARR_0_PATHS_1=/data/torrents/tv
+#       - UN_SONARR_0_PROTOCOLS=torrent
+#       - UN_SONARR_0_TIMEOUT=10s
+#       - UN_SONARR_0_DELETE_ORIG=false
+#       - UN_SONARR_0_DELETE_DELAY=5m
+#       # Radarr Config - Copy API Key from: http://radarr:7878/general/settings
+#       - UN_RADARR_0_URL=http://radarr:7878
+#       - UN_RADARR_0_API_KEY=
+#       - UN_RADARR_0_PATHS_0=/data/torrents/movies
+#       - UN_RADARR_0_PROTOCOLS=torrent
+#       - UN_RADARR_0_TIMEOUT=10s
+#       - UN_RADARR_0_DELETE_ORIG=false
+#       - UN_RADARR_0_DELETE_DELAY=5m
+#       # Lidarr Config - Copy API Key from: http://lidarr:8686/general/settings
+#       - UN_LIDARR_0_URL=http://lidarr:8686
+#       - UN_LIDARR_0_API_KEY=
+#       - UN_LIDARR_0_PATHS_0=/data/torrents/music
+#       - UN_LIDARR_0_PROTOCOLS=torrent
+#       - UN_LIDARR_0_TIMEOUT=10s
+#       - UN_LIDARR_0_DELETE_ORIG=false
+#       - UN_LIDARR_0_DELETE_DELAY=5m
+#       # Readarr Config - Copy API Key from: http://readarr:8787/general/settings
+#       - UN_READARR_0_URL=http://readarr:8787
+#       - UN_READARR_0_API_KEY=
+#       - UN_READARR_0_PATHS_0=/data/torrents/books
+#       - UN_READARR_0_PROTOCOLS=torrent
+#       - UN_READARR_0_TIMEOUT=10s
+#       - UN_READARR_0_DELETE_ORIG=false
+#       - UN_READARR_0_DELETE_DELAY=5m
+#       # Folder Config
+#       - UN_FOLDER_0_PATH=
+#       - UN_FOLDER_0_EXTRACT_PATH=
+#       - UN_FOLDER_0_DELETE_AFTER=10m
+#       - UN_FOLDER_0_DELETE_ORIGINAL=false
+#       - UN_FOLDER_0_DELETE_FILES=false
+#       - UN_FOLDER_0_MOVE_BACK=false
+#       # Webhook Config
+#       - UN_WEBHOOK_0_URL=
+#       - UN_WEBHOOK_0_NAME=
+#       - UN_WEBHOOK_0_NICKNAME=Unpackerr
+#       - UN_WEBHOOK_0_CHANNEL=
+#       - UN_WEBHOOK_0_TIMEOUT=10s
+#       - UN_WEBHOOK_0_SILENT=false
+#       - UN_WEBHOOK_0_IGNORE_SSL=false
+#       - UN_WEBHOOK_0_EXCLUDE_0=
+#       - UN_WEBHOOK_0_EVENTS_0=0
+#       - UN_WEBHOOK_0_TEMPLATE_PATH=
+#       - UN_WEBHOOK_0_CONTENT_TYPE=application/json
+#       # Command Hook Config
+#       - UN_CMDHOOK_0_COMMAND=
+#       - UN_CMDHOOK_0_NAME=
+#       - UN_CMDHOOK_0_TIMEOUT=10s
+#       - UN_CMDHOOK_0_SILENT=false
+#       - UN_CMDHOOK_0_SHELL=false
+#       - UN_CMDHOOK_0_EXCLUDE_0=
+#       - UN_CMDHOOK_0_EVENTS_0=0
+#     security_opt:
+#       - no-new-privileges:true
+#     network_mode: none
 
 ###########################################################################
 ###########################################################################
@@ -849,19 +849,19 @@ services:
 ##
 ###########################################################################
 ###########################################################################
-  whisparr:
-    image: hotio/whisparr:nightly
-    container_name: whisparr
-    restart: unless-stopped
-    volumes:
-      - ${FOLDER_FOR_DATA:?err}/whisparr:/config
-      - ${FOLDER_FOR_MEDIA:?err}:/data
-    ports:
-      - "${WEBUI_PORT_WHISPARR:?err}:6969"
-    environment:
-      - PUID=${PUID:?err}
-      - PGID=${PGID:?err}
-      - UMASK=${UMASK:?err}
-      - TZ=${TIMEZONE:?err}
-    networks:
-      - mediastack
+  # whisparr:
+  #   image: hotio/whisparr:nightly
+  #   container_name: whisparr
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${FOLDER_FOR_DATA:?err}/whisparr:/config
+  #     - ${FOLDER_FOR_MEDIA:?err}:/data
+  #   ports:
+  #     - "${WEBUI_PORT_WHISPARR:?err}:6969"
+  #   environment:
+  #     - PUID=${PUID:?err}
+  #     - PGID=${PGID:?err}
+  #     - UMASK=${UMASK:?err}
+  #     - TZ=${TIMEZONE:?err}
+  #   networks:
+  #     - mediastack
