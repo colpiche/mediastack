@@ -67,7 +67,8 @@ services:
 # NOTE: Gluetun VPN container MUST ONLY connect to the mediastack
 
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.2"
 
 ###########################################################################
 ###########################################################################
@@ -94,7 +95,8 @@ services:
 #     restart: unless-stopped
 # # NOTE: Authelia MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.3"
 
 ###########################################################################
 ###########################################################################
@@ -122,7 +124,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:bazarr
       - TP_THEME=${TP_THEME:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.4"
 
 ###########################################################################
 ###########################################################################
@@ -170,7 +173,8 @@ services:
 #       - SHOUTRRR_ADDRESSES=
 # # NOTE: DDNS-Update MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.5"
 
 ###########################################################################
 ###########################################################################
@@ -201,7 +205,8 @@ services:
 #       - TZ=${TIMEZONE:?err}
 #       - DARK_MODE=1
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.6"
 
 ###########################################################################
 ###########################################################################
@@ -225,7 +230,8 @@ services:
       - CAPTCHA_SOLVER=none
       - TZ=${TIMEZONE:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.7"
 
 ###########################################################################
 ###########################################################################
@@ -253,7 +259,8 @@ services:
 #       - "${WEBUI_PORT_HEIMDALL:?err}:80"
 # # NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.8"
 
 ###########################################################################
 ###########################################################################
@@ -283,7 +290,8 @@ services:
 #       - TZ=${TIMEZONE:?err}
 # # NOTE: Heimdall MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.9"
     
 ###########################################################################
 ###########################################################################
@@ -311,7 +319,8 @@ services:
 #       - TZ=${TIMEZONE:?err}
 # # NOTE: Homepage MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.10"
 
 ###########################################################################
 ###########################################################################
@@ -346,7 +355,8 @@ services:
       - TZ=${TIMEZONE:?err}
 #      - JELLYFIN_PublishedServerUrl=${LOCAL_DOCKER_IP:?err}  # Enable for DLNA - Only works on HOST Network Mode
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.11"
 
 ###########################################################################
 ###########################################################################
@@ -372,7 +382,8 @@ services:
       - UMASK=${UMASK:?err}
       - TZ=${TIMEZONE:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.12"
 
 ###########################################################################
 ###########################################################################
@@ -400,7 +411,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:lidarr
       - TP_THEME=${TP_THEME:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.13"
 
 ###########################################################################
 ###########################################################################
@@ -428,7 +440,8 @@ services:
   #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:mylar3
   #     - TP_THEME=${TP_THEME:?err}
   #   networks:
-  #     - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.14"
 
 ###########################################################################
 ###########################################################################
@@ -469,7 +482,8 @@ services:
 #       - VERSION=docker
 #       - PLEX_CLAIM=${PLEX_CLAIM}
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.15"
 
 ###########################################################################
 ###########################################################################
@@ -496,7 +510,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
       - TP_THEME=${TP_THEME:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.16"
 
 ###########################################################################
 ###########################################################################
@@ -553,7 +568,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
       - TP_THEME=${TP_THEME:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.17"
 
 ###########################################################################
 ###########################################################################
@@ -581,7 +597,8 @@ services:
   #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:readarr
   #     - TP_THEME=${TP_THEME:?err}
   #   networks:
-  #     - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.18"
 
 ###########################################################################
 ###########################################################################
@@ -609,7 +626,8 @@ services:
   #     - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sabnzbd
   #     - TP_THEME=${TP_THEME:?err}
   #   networks:
-  #     - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.19"
 
 ###########################################################################
 ###########################################################################
@@ -637,7 +655,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
       - TP_THEME=${TP_THEME:?err}
     networks:
-      - mediastack
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.20"
 
 ###########################################################################
 ###########################################################################
@@ -679,7 +698,8 @@ services:
 #       - STAGING=${STAGING}
 # # NOTE: SWAG MUST NOT connect to the Gluetun VPN container
 #     networks:
-#       - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.21"
 
 ###########################################################################
 ###########################################################################
@@ -737,7 +757,8 @@ services:
   #     - serverIP=0.0.0.0
   #     - serverPort=${TDARR_SERVER_PORT:?err}
   #   networks:
-  #     - mediastack
+#       mediastack:
+#         ipv4_address: "${DOCKER_SUBNET_BASE}.22"
 
 ###########################################################################
 ###########################################################################
