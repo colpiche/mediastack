@@ -886,3 +886,26 @@ services:
   #     - TZ=${TIMEZONE:?err}
   #   networks:
   #     - mediastack
+
+###########################################################################
+###########################################################################
+##
+##  Docker Compose File: Recyclarr
+##  Function: Syncing recommended settings from the TRaSH guides to your Sonarr/Radarr instances
+##
+##  Documentation: https://recyclarr.dev/wiki/
+##
+###########################################################################
+###########################################################################
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    container_name: recyclarr
+    user: ${PUID:?err}:${PGID:?err}
+    networks:
+      mediastack:
+        ipv4_address: "${DOCKER_SUBNET_BASE}.23"
+    volumes:
+      - ${FOLDER_FOR_DATA:?err}/recyclarr:/config
+    environment:
+      - TZ=${TIMEZONE:?err}
+      - RECYCLARR_CREATE_CONFIG=true
